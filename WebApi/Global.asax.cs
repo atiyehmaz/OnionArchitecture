@@ -30,22 +30,16 @@ namespace WebApi
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AutofacRegister();
-
-            //builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            //builder.RegisterType(typeof(Repository<BankDbContext>)).AsImplementedInterfaces();
-            //var container = builder.Build();
-            //DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-            //GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver((IContainer)container);
+         
         }
 
         private void AutofacRegister()
         {
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(typeof(CustomerController).Assembly);
-            builder.RegisterType(typeof(CustomerService)).As<ICustomerService>();
+            builder.RegisterGeneric(typeof(UnitOfWork<>)).As(typeof(IUnitOfWork<>)).InstancePerRequest();
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
-            //builder.RegisterType(typeof(UnitOfWork<BankDbContext>)).As<IRepository<BankDbContext>>();
-            builder.RegisterGeneric(typeof(UnitOfWork<>)).As(typeof(IUnitOfWork<>));
+            builder.RegisterType(typeof(CustomerService)).As<ICustomerService>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             builder.RegisterFilterProvider();

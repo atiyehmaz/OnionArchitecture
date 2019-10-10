@@ -16,7 +16,7 @@ namespace WebApi.Controllers
         //private readonly IRepository<Customer> _repository;
         private readonly ICustomerService _customerService;
 
-        public CustomerController(IUnitOfWork<BankDbContext> unitOfWork, IRepository<Customer> repository,
+        public CustomerController(IUnitOfWork<BankDbContext> unitOfWork/*, IRepository<Customer> repository,*/,
                                    ICustomerService customerService)
         {
             this._unitOfWork = unitOfWork;
@@ -46,6 +46,10 @@ namespace WebApi.Controllers
                     _customerService.Insert(customer);
                     _unitOfWork.Save();
                     _unitOfWork.Commit();
+                    if (_unitOfWork.Successful==true)
+                    {
+                        return Ok();
+                    }
 
                 }
                 catch (Exception)

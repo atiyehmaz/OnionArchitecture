@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Repsitory;
@@ -18,6 +19,7 @@ namespace Data
         private string _errorMessage = string.Empty;
         private DbContextTransaction _objTran;
         private Dictionary<string, object> _repositories;
+        public bool Successful { get; set; }
         //Using the Constructor we are initializing the _context variable is nothing but
         //we are storing the DBContext (EmployeeDBContext) object in _context variable
         public UnitOfWork()
@@ -59,7 +61,13 @@ namespace Data
         {
             try
             {
-                var dd = _context.SaveChanges();
+                
+                int zeroOrOne = _context.SaveChanges();
+                if (zeroOrOne ==1)
+                {
+                    Successful = true;
+                }
+
             }
             catch (DbEntityValidationException dbEx)
             {

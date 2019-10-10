@@ -24,7 +24,7 @@ namespace Data
         public DbSet<Deposit> Deposits { get; set; }
         public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<EmployeeBranch> customerBranches { get; set; }
+        public DbSet<EmployeeBranch> EmployeeBranches { get; set; }
 
     }
 }

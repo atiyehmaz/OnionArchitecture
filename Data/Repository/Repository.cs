@@ -16,7 +16,7 @@ namespace Data.Repsitory
         private bool _isDisposed;
         public BankDbContext Context { get; set; }
         protected virtual IDbSet<T> Entities => _entities ?? (_entities = Context.Set<T>());
-       // public virtual IQueryable<T> Table => Entities;
+        // public virtual IQueryable<T> Table => Entities;
 
         public Repository(IUnitOfWork<BankDbContext> unitOfWork)
             : this(unitOfWork.Context)
